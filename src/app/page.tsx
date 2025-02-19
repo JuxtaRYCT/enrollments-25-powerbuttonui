@@ -7,10 +7,16 @@ import { ShinyButton } from "~/components/magicui/shiny-button";
 export default function HomePage() {
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  const handleButtonClick = () => {
+  // Convert to async function to use 'await'
+  const handleButtonClick = async () => {
     if (audioRef.current) {
       audioRef.current.currentTime = 0; // Reset audio to the beginning
-      audioRef.current.play();
+
+      try {
+        await audioRef.current.play(); // ✅ Await the play promise
+      } catch (error) {
+        console.error("Audio playback failed:", error); // Handle errors (e.g., autoplay restrictions)
+      }
     }
   };
 
@@ -26,7 +32,7 @@ export default function HomePage() {
       />
 
       <div className="flex min-h-screen items-center justify-center">
-        <div className="relative flex min-h-screen w-full max-w-full flex-col items-center justify-center overflow-hidden rounded-lg bg-[]">
+        <div className="relative flex min-h-screen w-full max-w-full flex-col items-center justify-center overflow-hidden rounded-lg">
           {/* Audio Element */}
           <audio ref={audioRef} src="/startup_sound.mp3" preload="auto" />
 
