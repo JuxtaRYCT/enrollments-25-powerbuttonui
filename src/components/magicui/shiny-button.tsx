@@ -1,13 +1,13 @@
 "use client";
 
 import { cn } from "~/lib/utils";
-import { motion, MotionProps, type AnimationProps } from "motion/react";
+import { motion } from "framer-motion";
+import type { MotionProps, AnimationProps } from "framer-motion";
 import React from "react";
 
-const animationProps = {
+const animationProps: AnimationProps = {
   initial: { "--x": "100%", scale: 0.8 },
   animate: { "--x": "-100%", scale: 1 },
-  whileTap: { scale: 0.95 },
   transition: {
     repeat: Infinity,
     repeatType: "loop",
@@ -23,7 +23,7 @@ const animationProps = {
       mass: 0.5,
     },
   },
-} as AnimationProps;
+};
 
 interface ShinyButtonProps
   extends Omit<React.HTMLAttributes<HTMLElement>, keyof MotionProps>,
@@ -44,6 +44,7 @@ export const ShinyButton = React.forwardRef<
         className,
       )}
       {...animationProps}
+      whileTap={{ scale: 0.95 }}
       {...props}
     >
       <span
@@ -57,7 +58,7 @@ export const ShinyButton = React.forwardRef<
       </span>
       <span
         style={{
-          mask: "linear-gradient(rgb(0,0,0), rgb(0,0,0)) content-box,linear-gradient(rgb(0,0,0), rgb(0,0,0))",
+          mask: "linear-gradient(rgb(0,0,0), rgb(0,0,0)) content-box, linear-gradient(rgb(0,0,0), rgb(0,0,0))",
           maskComposite: "exclude",
         }}
         className="absolute inset-0 z-10 block rounded-full bg-[linear-gradient(-75deg,hsl(var(--primary)/10%)_calc(var(--x)+20%),hsl(var(--primary)/50%)_calc(var(--x)+25%),hsl(var(--primary)/10%)_calc(var(--x)+100%))] p-px"
